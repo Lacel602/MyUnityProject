@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
+    public Animator animator;
     public CharacterController2D controller;
     float horizontalMove = 0f;
     public float runSpeed = 40f;
@@ -14,6 +16,7 @@ public class Movement : MonoBehaviour
     void Update()
     {
         horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
+        animator.SetFloat("Speed", Math.Abs(horizontalMove));
         if (Input.GetButtonDown("Jump"))
         {
             jump = true;
