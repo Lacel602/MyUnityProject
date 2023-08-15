@@ -62,18 +62,18 @@ public class CharacterController2D : MonoBehaviour
         }
     }
 
-    bool doubleJump = true;
+    private bool doubleJump = false;
     public void Move(float move, bool crouch, bool jump)
     {
-        animator.SetFloat("Jump", m_Rigidbody2D.velocity.y);
+        animator.SetFloat("VerticalForce", m_Rigidbody2D.velocity.y);
         animator.SetBool("IsGrounded", m_Grounded);
-
-        if (m_Grounded && jump)
-        {
-            Debug.Log("Db " + doubleJump);
-            doubleJump = false;
-            Debug.Log("Db after " + doubleJump);
-        }
+        Debug.Log("Is Ground: " + m_Grounded);
+        //if (m_Grounded)
+        //{
+        //    //Debug.Log("Db " + doubleJump);
+        //    doubleJump = false;
+        //    //Debug.Log("Db after " + doubleJump);
+        //}
         // If crouching, check to see if the character can stand up
         if (!crouch)
         {
@@ -137,23 +137,26 @@ public class CharacterController2D : MonoBehaviour
         }
 
         // If the player should jump...
-        if ((m_Grounded || doubleJump) && jump)
+        if ((m_Grounded) && jump)
         {
-            Debug.Log("................Double " + doubleJump);
-            Debug.Log("...............Is ground " + m_Grounded);
+            Debug.Log("In here");
+            //Debug.Log("................Double " + doubleJump);
+            //Debug.Log("...............Is ground " + m_Grounded);
             m_Grounded = false;
             // Add a vertical force to the player.
             //m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
             m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, m_JumpForce);
-
-            doubleJump = !doubleJump;
-            Debug.Log("...............Double after" + doubleJump);
+            jump = false;
+            doubleJump = true;
+            Debug.Log("...............Double after jump: " + doubleJump);
         }
-        if ((m_Rigidbody2D.velocity.y > 0f) && jump)
-        {
-            Debug.Log("Double " + doubleJump);
+        Debug.Log("Double jump after jump: " + doubleJump);
+        if (!m_Grounded && jump && doubleJump)
+        {  
             //m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForceDouble));
             m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, m_JumpForceDouble);
+            Debug.Log("In here 112233");
+            doubleJump = false;
         }
     }
 
