@@ -63,7 +63,7 @@ public class CharacterController2D : MonoBehaviour
     }
 
     private bool doubleJump = false;
-    public void Move(float move, bool crouch, bool jump)
+    public void Move(float move, bool crouch, bool jump) 
     {
         animator.SetFloat("VerticalForce", m_Rigidbody2D.velocity.y);
         animator.SetBool("IsGrounded", m_Grounded);
