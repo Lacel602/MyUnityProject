@@ -8,12 +8,14 @@ namespace InputSystems
     public class PlayerInputProvider : MonoBehaviour, IInputProvider
     {
         private const string JumpButton = "Jump";
+
         private HashSet<InputAction> _requestedActions = new HashSet<InputAction>();
         public float GetAxis(Axis axis)
         {
             return Input.GetAxisRaw(axis.ToUnityAxis());
         }
 
+        //Check if the action contain or not
         public bool GetActionPressed(InputAction action)
         {
             return _requestedActions.Contains(action);
