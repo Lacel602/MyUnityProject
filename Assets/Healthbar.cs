@@ -6,13 +6,14 @@ using UnityEngine.UI;
 
 public class Healthbar : MonoBehaviour
 {
-    public Slider slider;
+    public Slider healthBar;
+    public Slider damaged;
 
     public void SetHealth(float health, float duration)
     {
-        float currentHealth = slider.value;
+        float currentHealth = healthBar.value;
         float targetHealth = currentHealth - health;
-
+        healthBar.value = targetHealth;
         StartCoroutine(LerpHealth(currentHealth, targetHealth, duration));
     }
 
@@ -23,11 +24,11 @@ public class Healthbar : MonoBehaviour
         {
             time += Time.deltaTime;
 
-            slider.value = Mathf.Lerp(startHealth, targetHealth, time / duration);
+            damaged.value = Mathf.Lerp(startHealth, targetHealth, time / duration);
             yield return null;
         }
         // Ensure the slider ends up with the exact target value.
-        slider.value = targetHealth;
+        damaged.value = targetHealth;
     }
 
     private void Update()
