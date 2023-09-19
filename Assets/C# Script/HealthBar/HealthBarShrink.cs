@@ -6,10 +6,10 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public class HealthBarFade : MonoBehaviour
+public class HealthBarShrink : MonoBehaviour
 {
     [SerializeField]
-    float damage;
+    private float testDamage;
     [SerializeField]
     private float shrinkTimerMax = 1f;
     [SerializeField]
@@ -27,7 +27,7 @@ public class HealthBarFade : MonoBehaviour
     {
         _healthSystem = playerObject.GetComponent<HealthSystem>();
         healthBarImage = transform.Find("HealthFill").GetComponent<Image>();
-        damagedBarImage =transform.Find("DamagedFill").GetComponent<Image>();
+        damagedBarImage = transform.Find("DamagedFill").GetComponent<Image>();
     }
 
     private void Start()
@@ -35,6 +35,8 @@ public class HealthBarFade : MonoBehaviour
         //_healthSystem.setMaxHealth(100);
         SetHealth(_healthSystem.GetHealthRatio());
         damagedBarImage.fillAmount = healthBarImage.fillAmount;
+        Debug.Log("healthBarImage.fillAmount = " + healthBarImage.fillAmount);
+        Debug.Log("damagedBarImage.fillAmount = " + damagedBarImage.fillAmount);
         _healthSystem.OnDamaged += HealthSystem_OnDamaged;
         _healthSystem.OnHealed += HealthSystem_OnHealed;
     }
@@ -45,26 +47,26 @@ public class HealthBarFade : MonoBehaviour
 
         //Testing damage and healing
         if (Input.GetMouseButtonDown(1))
-        {  
-            _healthSystem.Damaged(damage);
+        {
+            _healthSystem.Damaged(testDamage);
         }
         if (Input.GetMouseButtonDown(2))
         {
-            _healthSystem.Healed(damage);
+            _healthSystem.Healed(testDamage);
         }
 
         shrinkTimer -= Time.deltaTime;
         if (shrinkTimer <= 0)
         {
-            if(healthBarImage.fillAmount < damagedBarImage.fillAmount)
+            if (healthBarImage.fillAmount < damagedBarImage.fillAmount)
             {
-                
+
                 if (!hasCoroutineStarted)
                 {
                     StartCoroutine(DecreaseOverTime(damagedBarImage.fillAmount, healthBarImage.fillAmount));
                     hasCoroutineStarted = true;
                 }
-                
+
                 //damagedBarImage.fillAmount -= shrinkSpeed * Time.deltaTime;
                 //Debug.Log("damagedBarImage " + damagedBarImage.fillAmount);
             }
@@ -82,7 +84,7 @@ public class HealthBarFade : MonoBehaviour
                 float t = (Time.time - startTime) / shrinkTime;
                 damagedFill = Mathf.Lerp(damagedFill, healthFill, t);
                 damagedBarImage.fillAmount = damagedFill;
-                yield return null; 
+                yield return null;
             }
             damagedFill = healthFill;
             damagedBarImage.fillAmount = healthFill;
@@ -100,12 +102,13 @@ public class HealthBarFade : MonoBehaviour
     {
 
         shrinkTimer = shrinkTimerMax;
-        
+
         SetHealth(_healthSystem.GetHealthRatio());
     }
 
-    private void SetHealth(float healthNormalize)
+    private void SetHealth(float healthRatio)
     {
-        healthBarImage.fillAmount = healthNormalize;
+        healthBarImage.fillAmount = healthRatio;
+        Debug.Log("Health" + healthRatio);
     }
 }

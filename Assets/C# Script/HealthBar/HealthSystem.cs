@@ -12,9 +12,13 @@ public class HealthSystem : MonoBehaviour
     [SerializeField]
     private float maxHealth;
 
-    private void Start()
+    private void Awake()
     {
         currentHealth = maxHealth;
+        
+    }
+    private void Start()
+    {
     }
     public void setMaxHealth(float health)
     {

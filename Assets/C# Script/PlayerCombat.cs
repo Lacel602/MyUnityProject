@@ -35,11 +35,6 @@ public class PlayerCombat : MonoBehaviour
                 Debug.Log("nextatk = " + nextAttackTime);
             }
         }
-
-        if (Input.GetMouseButtonDown(1))
-        {
-            
-        }
     }
 
     private void PlayerAttack()
