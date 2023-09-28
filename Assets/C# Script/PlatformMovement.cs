@@ -21,11 +21,14 @@ public class PlatformMovement : MonoBehaviour
     [SerializeField]
     private GameObject groundCheckObject;
     private bool isFacecingRight = true;
+
+    private Vector2 lastGroundedPosition;
     private void Start()
     {
         _rigiboby = GetComponent<Rigidbody2D>();
         _inputProvider = GetComponent<IInputProvider>();
         _groundCheck = groundCheckObject.GetComponent<ICheck>();
+        lastGroundedPosition = transform.position;
     }
 
     private void FixedUpdate()
@@ -37,6 +40,20 @@ public class PlatformMovement : MonoBehaviour
     private void Update()
     {
         AnimationChange();
+        SavingLastGroundedPosition();
+    }
+
+    private void SavingLastGroundedPosition()
+    {
+        if (IsGrounded())
+        {
+            lastGroundedPosition = transform.position;
+        }
+    }
+
+    public void ReturnLastGroundedPosition()
+    {
+        transform.position = lastGroundedPosition;
     }
 
     private void AnimationChange()
@@ -50,17 +67,17 @@ public class PlatformMovement : MonoBehaviour
         //Move to right and facing left
         if (_rigiboby.velocity.x > 0.01 && !isFacecingRight)
         {
-            Debug.Log("x = " + _rigiboby.velocity.x);
+            //Debug.Log("x = " + _rigiboby.velocity.x);
             Flip();
-            Debug.Log("turn right");
+            //Debug.Log("turn right");
         }
         // Otherwise if the input is moving to left and facing right...
         else if (_rigiboby.velocity.x < -0.01 && isFacecingRight)
         {
             // ... flip the player.
-            Debug.Log("x = " + _rigiboby.velocity.x);
+            //Debug.Log("x = " + _rigiboby.velocity.x);
             Flip();
-            Debug.Log("turn left");
+            //Debug.Log("turn left");
         }
     }
 

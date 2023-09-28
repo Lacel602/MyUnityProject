@@ -32,7 +32,7 @@ public class PlayerCombat : MonoBehaviour
             {
                 PlayerAttack();
                 nextAttackTime = Time.time + 1f / atkRate;
-                Debug.Log("nextatk = " + nextAttackTime);
+                //Debug.Log("nextatk = " + nextAttackTime);
             }
         }
     }

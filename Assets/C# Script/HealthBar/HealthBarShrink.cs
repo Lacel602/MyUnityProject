@@ -35,8 +35,8 @@ public class HealthBarShrink : MonoBehaviour
         //_healthSystem.setMaxHealth(100);
         SetHealth(_healthSystem.GetHealthRatio());
         damagedBarImage.fillAmount = healthBarImage.fillAmount;
-        Debug.Log("healthBarImage.fillAmount = " + healthBarImage.fillAmount);
-        Debug.Log("damagedBarImage.fillAmount = " + damagedBarImage.fillAmount);
+        //Debug.Log("healthBarImage.fillAmount = " + healthBarImage.fillAmount);
+        //Debug.Log("damagedBarImage.fillAmount = " + damagedBarImage.fillAmount);
         _healthSystem.OnDamaged += HealthSystem_OnDamaged;
         _healthSystem.OnHealed += HealthSystem_OnHealed;
     }
@@ -109,6 +109,6 @@ public class HealthBarShrink : MonoBehaviour
     private void SetHealth(float healthRatio)
     {
         healthBarImage.fillAmount = healthRatio;
-        Debug.Log("Health" + healthRatio);
+        //Debug.Log("Health" + healthRatio);
     }
 }
