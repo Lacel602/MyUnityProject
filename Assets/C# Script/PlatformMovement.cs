@@ -12,6 +12,8 @@ public class PlatformMovement : MonoBehaviour
     private IInputProvider _inputProvider;
     private ICheck _groundCheck;
     [SerializeField]
+    private ParticleSystem dustEffect;
+    [SerializeField]
     private Animator _animator;
     [Header("Movement Configuration")]
     [SerializeField]
@@ -34,8 +36,7 @@ public class PlatformMovement : MonoBehaviour
     private void FixedUpdate()
     {
         ApplyHorizontalMovement();
-        ApplyJump();
-        
+        ApplyJump();     
     }
     private void Update()
     {
@@ -86,7 +87,7 @@ public class PlatformMovement : MonoBehaviour
        if (IsGrounded() && _inputProvider.GetActionPressed(InputAction.Jump))
         {
             _rigiboby.SetVelocity(Axis.Y, jumpForce);
-            
+            CreateDustEffect();
         }
     }
 
@@ -103,11 +104,20 @@ public class PlatformMovement : MonoBehaviour
 
     private void Flip()
     {
+        if (IsGrounded())
+        {
+            CreateDustEffect();
+        }  
         //Switch the way the player is labelled as facing.
         isFacecingRight = !isFacecingRight;
         // Multiply the player's x local scale by -1.
         Vector3 playerScale = transform.localScale;
         playerScale.x *= -1;
         transform.localScale = playerScale;
+    }
+
+    private void CreateDustEffect()
+    {
+        dustEffect.Play();
     }
 }
