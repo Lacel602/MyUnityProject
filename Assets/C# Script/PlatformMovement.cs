@@ -11,8 +11,12 @@ public class PlatformMovement : MonoBehaviour
     private Rigidbody2D _rigiboby;
     private IInputProvider _inputProvider;
     private ICheck _groundCheck;
+
     [SerializeField]
     private ParticleSystem dustEffect;
+    [SerializeField]
+    private ParticleSystem landingEffect;
+
     [SerializeField]
     private Animator _animator;
     [Header("Movement Configuration")]
@@ -119,5 +123,14 @@ public class PlatformMovement : MonoBehaviour
     private void CreateDustEffect()
     {
         dustEffect.Play();
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Ground"))
+        {
+            Debug.Log("Landing");
+            landingEffect.Play();
+        }
     }
 }
