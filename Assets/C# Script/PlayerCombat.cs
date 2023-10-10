@@ -1,3 +1,5 @@
+using Enums;
+using Interfaces;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -21,18 +23,23 @@ public class PlayerCombat : MonoBehaviour
     private float piercing;
     [SerializeField]
     public LayerMask enemylayers;
+    private IInputProvider _inputProvider;
 
     float nextAttackTime = 0f;
+
+    public void Start()
+    {
+        _inputProvider = GetComponent<IInputProvider>();
+    }
     void Update()
     {
         //Debug.Log("aa " + Time.time);
         if (Time.time >= nextAttackTime)
         {
-            if (Input.GetMouseButtonDown(0))
+            if (_inputProvider.GetActionPressed(InputAction.Attack))
             {
                 PlayerAttack();
                 nextAttackTime = Time.time + 1f / atkRate;
-                //Debug.Log("nextatk = " + nextAttackTime);
             }
         }
     }

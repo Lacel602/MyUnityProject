@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Utils
 {
-    public class BoxCheck : MonoBehaviour, ICheck
+    public class BoxCheck : MonoBehaviour, ICheckCollision
     {
         [SerializeField]
         private float width = 0.1f;
@@ -11,7 +11,7 @@ namespace Utils
         private float height = 0.1f;
         [SerializeField]
         private LayerMask collisionMask;
-        public bool Check()
+        public bool CheckCollision()
         {
             return Physics2D.OverlapBox(
                 transform.position,

@@ -2,6 +2,7 @@
 {
     public enum InputAction
     {
-        Jump
+        Jump,
+        Attack
     }
 }
