@@ -58,11 +58,12 @@ public class PlatformMovement : MonoBehaviour
     }
     private void Update()
     {
-        if (UnityEngine.Input.GetKeyDown(KeyCode.LeftShift) && canDash)
+        if (!_inputProvider.GetActionPressed(InputAction.Attack))
         {
-            StartCoroutine(Dash());
-            //_rigiboby.AddForce(new Vector2(5f , 0f), ForceMode2D.Impulse);
-            //_rigiboby.SetVelocity(Axis.X, 5f);
+            if (UnityEngine.Input.GetKeyDown(KeyCode.LeftShift) && canDash)
+            {
+                StartCoroutine(Dash());
+            }
         }
         CheckingCanMove();
         AnimationChange();
@@ -75,9 +76,8 @@ public class PlatformMovement : MonoBehaviour
         {
             canMove = false;
             _rigiboby.SetVelocity(Axis.X, 0);
-            //_rigiboby.SetVelocity(Axis.Y, 0);
-            //Debug.Log("cannotMove");
-        } else
+        }
+        else
         {
             canMove = true;
         }
@@ -102,14 +102,12 @@ public class PlatformMovement : MonoBehaviour
         _animator.SetFloat("VerticalForce", _rigiboby.velocity.y);
         _animator.SetBool("IsGrounded", IsGrounded());
         _animator.SetFloat("Speed", Math.Abs(_rigiboby.velocity.x));
-        //Move to right and facing left
         if (_rigiboby.velocity.x > 0.01 && !isFacecingRight)
         {
             //Debug.Log("x = " + _rigiboby.velocity.x);
             Flip();
             //Debug.Log("turn right");
         }
-        // Otherwise if the input is moving to left and facing right...
         else if (_rigiboby.velocity.x < -0.01 && isFacecingRight)
         {
             // ... flip the player.

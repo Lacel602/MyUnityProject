@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    
+    private DamagePopUp damagePopUp;
     [SerializeField]
     private Animator _animator;
     [SerializeField]
@@ -14,16 +16,21 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private float deathTime = 2.0f;
     private float currentHealth;
+    [SerializeField]
+    private GameObject _popUpText;
 
     void Start()
     {
-        currentHealth = maxHealth;
+        damagePopUp = _popUpText.GetComponent<DamagePopUp>();
+        currentHealth = maxHealth; 
     }
 
     public void TakeDamage(float damage, float piercing)
     {
         //Decrease health
         currentHealth -= damage * (100 - defAmor) * (100 + piercing) / 10000;
+        //PopUpdamage
+        damagePopUp.Create(transform.position, (int) damage);
         //Play hurt animation
         _animator.SetTrigger("Hurt");
 

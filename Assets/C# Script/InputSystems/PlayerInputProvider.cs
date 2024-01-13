@@ -8,10 +8,12 @@ namespace InputSystems
 {
     public class PlayerInputProvider : MonoBehaviour, IInputProvider
     {
+        private ICheckCollision _groundCheck;
         private const string JumpButton = "Jump";
         [SerializeField]
         private Animator animator;
-
+        [SerializeField]
+        private GameObject groundCheckObject;
         private HashSet<InputAction> _requestedActions = new HashSet<InputAction>();
         public float GetAxis(Axis axis)
         {
@@ -27,49 +29,41 @@ namespace InputSystems
         public void Start()
         {
             animator = GetComponent<Animator>();
+            _groundCheck = groundCheckObject.GetComponent<ICheckCollision>();
         }
 
         public void Update()
         {
             if (_requestedActions.Contains(InputAction.Attack))
             {
-                //Debug.Log("Contains attack = true");
+                Debug.Log("Contains attack = true");
             }
             CaptureInput();
         }
 
         private void CaptureInput()
         {
-            GetJumpInput();
+            GetJumpInput(); 
             GetAttackInput();
         }
 
         private void GetAttackInput()
         {
-            AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
 
             if (Input.GetMouseButtonDown(0))
             {
-                if (!_requestedActions.Contains(InputAction.Attack))
+                if (!_requestedActions.Contains(InputAction.Attack) && IsGrounded())
                 {
-                    //Debug.Log("Add attack");
                     _requestedActions.Add(InputAction.Attack);
-                }
-
-                float t = 0.5f;
-                Invoke("RemoveAttack", t * Time.timeScale);
+                    Invoke("RemoveAttack", 0.5f * Time.timeScale);
+                }            
             }
-
-            //if (animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
-            //{
-            //    if (_requestedActions.Contains(InputAction.Attack))
-            //    {
-            //        _requestedActions.Remove(InputAction.Attack);
-            //        Debug.Log("Ket thuc atk");
-            //    }
-            //}
         }
 
+        private bool IsGrounded()
+        {
+            return _groundCheck.CheckCollision();
+        }
         private void RemoveAttack()
         {
             if (_requestedActions.Contains(InputAction.Attack))
