@@ -18,9 +18,9 @@ public class DamagePopUp : MonoBehaviour
         Transform damagePopUpTransform = Instantiate(damagePopUpText, position, Quaternion.identity);
         DamagePopUp damagePopUp = damagePopUpTransform.GetComponent<DamagePopUp>();
         damagePopUp.SetUp(damageAmount);
-
         return damagePopUp;
     }
+
     private TextMeshPro textMesh;
     private void Awake()
     {

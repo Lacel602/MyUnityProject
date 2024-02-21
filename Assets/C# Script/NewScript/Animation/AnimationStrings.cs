@@ -12,8 +12,16 @@ namespace Assets.C__Script.NewScript.Animation
         internal static string isFastRunning = "isFastRunning";
         internal static string isGrounded = "isGrounded";
         internal static string yVelocity = "yVelocity";
-        internal static string jump = "jump";
+        internal static string jumpTrigger = "jump";
         internal static string isOnWall = "isOnWall";
         internal static string isCeiling = "isCeiling";
+        internal static string attackTrigger = "Attack";
+        internal static string canMove = "canMove";
+        internal static string hasTarget = "hasTarget";
+        internal static string isAlive = "isAlive";
+        internal static string hitTrigger = "hit";
+        internal static string lockVelocity = "lockVelocity";
+        internal static string attackCooldown = "attackCooldown";
+        internal static string isRangedAttacking = "isRangedAttacking";
     }
 }

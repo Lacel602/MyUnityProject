@@ -12,12 +12,12 @@ public class SpawnObject : MonoBehaviour
     private float currentTime;
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
-    {                                                                                                
+    {
         if (currentTime > 0)
         {
             currentTime -= Time.deltaTime;
@@ -27,10 +27,10 @@ public class SpawnObject : MonoBehaviour
     public void SpawnEnemy()
     {
         Debug.Log("spawn");
-        if (currentTime <= 0) 
+        if (currentTime <= 0)
         {
             Instantiate(spawnObject, transform.position, Quaternion.identity);
             currentTime = timeToSpawn;
-        }     
+        }
     }
 }

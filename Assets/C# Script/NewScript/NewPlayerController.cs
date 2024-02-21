@@ -7,18 +7,18 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Windows;
 
-[RequireComponent(typeof(Rigidbody2D), typeof(TouchingDirections))]
+[RequireComponent(typeof(Rigidbody2D), typeof(TouchingDirections), typeof(Damagable))]
 public class NewPlayerController : MonoBehaviour
 {
     [SerializeField]
     private float walkSpeed = 5f;
-    private float airMovementSpeed = 4f;
     private Vector2 playerInput;
 
     private Rigidbody2D rb;
     private Animator animator;
 
     private TouchingDirections touchingDirections;
+    private Damagable damagable;
 
     [SerializeField]
     private bool _isFacingRight = true;
@@ -71,33 +71,87 @@ public class NewPlayerController : MonoBehaviour
         }
     }
 
+    private float lastSpeed;
     private float currentSpeed
     {
         get
         {
-            if (isMoving && !touchingDirections.isOnWall)
+            if (canMove)
             {
-
-                if (isRunning)
+                if (isMoving && !touchingDirections.isOnWall)
                 {
-                    return walkSpeed * 1.5f;
+                    if (touchingDirections.isGrounded)
+                    {
+                        if (isRunning)
+                        {
+                            return walkSpeed * 1.5f;
+                        }
+                        else
+                        {
+                            return walkSpeed;
+                        }
+                    }
+                    else
+                    {
+                        if (lastSpeed != 0)
+                        {
+                            return lastSpeed;
+                        }
+                        else
+                        {
+                            return walkSpeed;
+                        }
+                    }
                 }
                 else
                 {
-                    return walkSpeed;
+                    return 0f;
                 }
             }
             else
             {
+                //Lock player movement while attacking
                 return 0f;
             }
         }
     }
+
+    public bool canMove
+    {
+        get
+        {
+            return animator.GetBool(AnimationStrings.canMove);
+        }
+    }
+
+    public bool IsAlive
+    {
+        get
+        {
+            return animator.GetBool(AnimationStrings.isAlive);
+        }
+    }
+
+    private bool _holdingBow = false;
+    public bool HoldingBow
+    {
+        get
+        {
+            return _holdingBow;
+        }
+        private set
+        {
+            _holdingBow = value;
+            animator.SetBool(AnimationStrings.isRangedAttacking, _holdingBow);
+        }
+    }
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         touchingDirections = GetComponent<TouchingDirections>();
+        damagable = GetComponent<Damagable>();
     }
 
     void Start()
@@ -107,16 +161,27 @@ public class NewPlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rb.velocity = new Vector2(playerInput.x * currentSpeed, rb.velocity.y);
+        if (!damagable.LockVelocity)
+        {
+            rb.velocity = new Vector2(playerInput.x * currentSpeed, rb.velocity.y);
+            lastSpeed = currentSpeed;
+        }
         animator.SetFloat(AnimationStrings.yVelocity, rb.velocity.y);
     }
 
     public void OnMove(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
         playerInput = context.ReadValue<Vector2>();
-        isMoving = playerInput != Vector2.zero;
 
-        SetFacingDirection(playerInput);
+        if (IsAlive)
+        {
+            isMoving = playerInput != Vector2.zero;
+            SetFacingDirection(playerInput);
+        }
+        else
+        {
+            isMoving = false;
+        }
     }
 
     private void SetFacingDirection(Vector2 playerInput)
@@ -147,10 +212,61 @@ public class NewPlayerController : MonoBehaviour
 
     public void OnJump(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
-        if (context.started && touchingDirections.isGrounded)
+        if (context.started && touchingDirections.isGrounded && canMove)
         {
-            animator.SetTrigger(AnimationStrings.jump);
+            animator.SetTrigger(AnimationStrings.jumpTrigger);
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+        }
+    }
+
+    public void OnAttack(UnityEngine.InputSystem.InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            animator.SetTrigger(AnimationStrings.attackTrigger);
+        }
+    }
+
+    public void OnHit(float damage, Vector2 knockback)
+    {
+        rb.velocity = new Vector2(knockback.x, rb.velocity.y + knockback.y);
+    }
+    public void OnRangedAttack(UnityEngine.InputSystem.InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            HoldingBow = true;
+        }
+        if (context.canceled)
+        {
+            HoldingBow = false;
+        }
+    }
+    public float bowHoldingTime = 0f;
+    public int charged = 1;
+    private void Update()
+    {
+        CheckingChargeBow();     
+    }
+
+    private void CheckingChargeBow()
+    {
+        //Debug.Log("HoldingbowTime = " + bowHoldingTime);
+        if (HoldingBow)
+        {
+            bowHoldingTime += Time.deltaTime;
+        }
+        if (bowHoldingTime < 0.5f)
+        {
+            charged = 1;
+        }
+        else if (bowHoldingTime >= 0.5f && bowHoldingTime < 1f)
+        {
+            charged = 2;
+        }
+        else if (bowHoldingTime >= 1f)
+        {
+            charged = 3;
         }
     }
 }

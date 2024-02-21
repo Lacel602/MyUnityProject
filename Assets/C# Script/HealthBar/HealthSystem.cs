@@ -8,6 +8,7 @@ public class HealthSystem : MonoBehaviour
 {
     public event EventHandler OnDamaged;
     public event EventHandler OnHealed;
+
     private float currentHealth;
     [SerializeField]
     private float maxHealth;
@@ -16,9 +17,6 @@ public class HealthSystem : MonoBehaviour
     {
         currentHealth = maxHealth;
         
-    }
-    private void Start()
-    {
     }
     public void setMaxHealth(float health)
     {
