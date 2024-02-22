@@ -10,6 +10,7 @@ using UnityEngine.Windows;
 [RequireComponent(typeof(Rigidbody2D), typeof(TouchingDirections), typeof(Damagable))]
 public class NewPlayerController : MonoBehaviour
 {
+    public InventoryManager inventoryManager;
     [SerializeField]
     private float walkSpeed = 5f;
     private Vector2 playerInput;
@@ -25,6 +26,8 @@ public class NewPlayerController : MonoBehaviour
 
     [SerializeField]
     private float jumpForce = 16f;
+
+    public GameObject outOfArrow;
 
     public bool isFacingRight
     {
@@ -133,6 +136,8 @@ public class NewPlayerController : MonoBehaviour
     }
 
     private bool _holdingBow = false;
+
+    //private GameObject 
     public bool HoldingBow
     {
         get
@@ -235,18 +240,27 @@ public class NewPlayerController : MonoBehaviour
     {
         if (context.started)
         {
-            HoldingBow = true;
+            if (inventoryManager.RemoveItem(inventoryManager.itemsToPickUp[0]))
+            {
+                HoldingBow = true;
+            } else
+            {
+                //Display speech box
+                outOfArrow.SetActive(true);
+            }
         }
         if (context.canceled)
         {
             HoldingBow = false;
         }
     }
+    [HideInInspector]
     public float bowHoldingTime = 0f;
+    [HideInInspector]
     public int charged = 1;
     private void Update()
     {
-        CheckingChargeBow();     
+        CheckingChargeBow();
     }
 
     private void CheckingChargeBow()
@@ -267,6 +281,19 @@ public class NewPlayerController : MonoBehaviour
         else if (bowHoldingTime >= 1f)
         {
             charged = 3;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Arrow"))
+        {
+            Arrow arrow = collision.gameObject.GetComponent<Arrow>();
+            if (arrow.pickUp)
+            {
+                inventoryManager.AddItem(inventoryManager.itemsToPickUp[0]);
+                Destroy(collision.gameObject);
+            }
         }
     }
 }

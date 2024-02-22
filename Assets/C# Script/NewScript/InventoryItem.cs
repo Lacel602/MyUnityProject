@@ -1,24 +1,44 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
-    [HideInInspector]
-    public Item item;
     [Header("UI")]
     public Image image;
+    public TextMeshProUGUI countText;
+    [HideInInspector]
+    public Item item;
+    [HideInInspector]
+    public Transform parentAfterDrag;
+    [HideInInspector]
+    public int count = 1;
 
     public void InitialiseItem(Item newItem)
     {
         item = newItem;
-        image.sprite= newItem.image;
+
+        if (newItem.image != null)
+        {
+            image.sprite = newItem.image;
+            RefreshCount();
+        }
+        else
+        {
+            Debug.Log("Null image sprite!");
+        }
     }
 
-    [HideInInspector]
-    public Transform parentAfterDrag;
+    public void RefreshCount()
+    {
+        countText.text = count.ToString();
+        bool textActive = count > 1;
+        countText.gameObject.SetActive(textActive);
+    }
+
     public void OnBeginDrag(PointerEventData eventData)
     {
         image.raycastTarget = false;
@@ -29,7 +49,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     public void OnDrag(PointerEventData eventData)
     {
         transform.position = Input.mousePosition;
-        
+
     }
 
     public void OnEndDrag(PointerEventData eventData)

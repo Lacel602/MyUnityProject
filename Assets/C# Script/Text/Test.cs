@@ -4,15 +4,38 @@ using UnityEngine;
 
 public class Test : MonoBehaviour
 {
-    [SerializeField]
-    private Transform damagePopUp;
-    void Start() 
+    public InventoryManager inventoryManager;
+    public Item[] itemsToPickUp;
+
+    public void PickupItem(int id)
     {
-        Instantiate(damagePopUp, Vector3.zero, Quaternion.identity);
+        if (itemsToPickUp[id] == null)
+        {
+            Debug.Log("Item not found");
+        }
+        else
+        {
+            bool result = inventoryManager.AddItem(itemsToPickUp[id]);
+            if (result)
+            {
+                Debug.Log("Item Added");
+            } else
+            {
+                Debug.Log("Failed adding item!");
+            }
+        }
     }
 
-    void Update()
+    public void Remove(int id)
     {
-        
+        bool result = inventoryManager.RemoveItem(itemsToPickUp[id]);
+        if (result)
+        {
+            Debug.Log("Item removed");
+        }
+        else
+        {
+            Debug.Log("Failed remove item!");
+        }
     }
 }
