@@ -48,7 +48,7 @@ public class PlayerCombat : MonoBehaviour
         //Damage all enemies in range
         foreach (Collider2D enemy in hitEnemies)
         {
-            enemy.GetComponent<Enemy>().TakeDamage(atkDamage, piercing);
+            //enemy.GetComponent<Enemy>().TakeDamage(atkDamage, piercing);
         }
     }
 

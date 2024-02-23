@@ -3,17 +3,16 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Knight;
 
-[RequireComponent(typeof(TouchingDirections), typeof(Rigidbody2D), typeof(Damagable))]
-public class Knight : MonoBehaviour
+public class Skeleton : MonoBehaviour
 {
-    [SerializeField]
+    [Header("Movement")]
     public float walkAcceleration = 30f;
-    [SerializeField]
     public float maxSpeed = 3f;
-    [SerializeField]
     public float walkStopRate = 1f;
 
+    [Header("Component")]
     [SerializeField]
     private DetectionZone attackZone;
     [SerializeField]
@@ -23,14 +22,30 @@ public class Knight : MonoBehaviour
     Rigidbody2D rb;
     private TouchingDirections touchingDirections;
     private Damagable damagable;
+    private CapsuleCollider2D capsuleCollider2D;
 
+    private void Awake()
+    {
+        capsuleCollider2D = GetComponent<CapsuleCollider2D>();
+        rb = GetComponent<Rigidbody2D>();
+        touchingDirections = GetComponent<TouchingDirections>();
+        animator = GetComponent<Animator>();
+        damagable = GetComponent<Damagable>();
+    }
+
+    public void OnSpawn()
+    {
+        capsuleCollider2D.enabled = true;
+        rb.bodyType = RigidbodyType2D.Dynamic;
+        animator = GetComponent<Animator>();
+        damagable = GetComponent<Damagable>();
+    }
     public enum WalkEnum
     {
         Right, Left
     }
-    private Vector2 walkDirectionVector = Vector2.right;
+    private Vector2 walkDirectionVector = Vector2.left;
     private WalkEnum _walkDirection;
-
     public WalkEnum WalkDirection
     {
         get
@@ -54,13 +69,6 @@ public class Knight : MonoBehaviour
             _walkDirection = value;
         }
     }
-    private void Awake()
-    {
-        rb = GetComponent<Rigidbody2D>();
-        touchingDirections = GetComponent<TouchingDirections>();
-        animator = GetComponent<Animator>();
-        damagable = GetComponent<Damagable>();
-    }
 
     private bool _hasTarget = false;
     public bool HasTarget
@@ -81,34 +89,13 @@ public class Knight : MonoBehaviour
         }
     }
 
-    public float AttackCooldown
-    {
-        get
-        {
-            return animator.GetFloat(AnimationStrings.attackCooldown);
-        }
-        private set
-        {
-            animator.SetFloat(AnimationStrings.attackCooldown, Mathf.Max(value, 0));
-        }
-    }
-
-    private void Update()
-    {
-        if (AttackCooldown > 0)
-        {
-            AttackCooldown -= Time.deltaTime;
-        }
-        HasTarget = attackZone.detectedColliders.Count > 0;
-    }
-
     private void FixedUpdate()
     {
-        if (touchingDirections.isGrounded && touchingDirections.isOnWall && Mathf.Abs(rb.velocity.x) > 0.001)
+        if (touchingDirections.isGrounded && touchingDirections.isOnWall && Mathf.Abs(rb.velocity.x) > 0.0001)
         {
             if (touchingDirections.isOnWall)
             {
-                Debug.Log("Wallllll");
+                Debug.Log("Wallllllllllllll");
             }
             FlipDirection();
         }
@@ -146,13 +133,9 @@ public class Knight : MonoBehaviour
         }
     }
 
-    public void OnHit(float damage, Vector2 knockback)
-    {
-        rb.velocity = new Vector2(knockback.x, rb.velocity.y + knockback.y);
-    }
-
     public void OnCliffDetected()
     {
-        FlipDirection() ;
+        FlipDirection();
     }
+
 }
