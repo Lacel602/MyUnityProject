@@ -23,7 +23,7 @@ public class Arrow : MonoBehaviour
     void Start()
     {
         float random = UnityEngine.Random.Range(0.9f, 1.1f);
-        rb2d.AddForce(new Vector2(moveSpeed.x * transform.localScale.x * mutiplier * 0.5f * random, moveSpeed.y * mutiplier * 0.5f * random), ForceMode2D.Impulse);
+        rb2d.AddForce(new Vector2(moveSpeed.x * transform.localScale.x + mutiplier * 5f * random, moveSpeed.y * mutiplier * 0.5f * random), ForceMode2D.Impulse);
 
         if (mutiplier >= 3)
         {
@@ -71,7 +71,7 @@ public class Arrow : MonoBehaviour
             pickUp = true;
             //Start auto destroy
             autoDestroy = true;
-        } 
+        }
         else if (collision.CompareTag("Player"))
         {
         }
@@ -80,8 +80,8 @@ public class Arrow : MonoBehaviour
             Damagable damagable = collision.GetComponent<Damagable>();
             if (damagable != null && canHit)
             {
-                
-                knockbackForce = new Vector2(knockbackForce.x + (mutiplier * 3f), knockbackForce.y + (mutiplier * 3f));
+
+                knockbackForce = new Vector2(knockbackForce.x * (mutiplier * 0.5f), knockbackForce.y * (mutiplier * 0.5f));
                 Vector2 deliveredKnockback = transform.localScale.x > 0 ? knockbackForce : new Vector2(-knockbackForce.x, knockbackForce.y);
                 damagable.Hit(attackDamage * (mutiplier * 0.5f), deliveredKnockback, isCritical);
 

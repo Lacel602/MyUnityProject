@@ -41,7 +41,7 @@ public class InventoryManager : MonoBehaviour
             InventorySlot slot = inventorySlots[i];
             InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
             //if slot is not occupied
-            if (itemInSlot != null && itemInSlot.item == item && itemInSlot.count <= maxStackedItem && itemInSlot.item.stackable)
+            if (itemInSlot != null && itemInSlot.item == item && itemInSlot.count < maxStackedItem && itemInSlot.item.stackable)
             {
                 itemInSlot.count++;
                 itemInSlot.RefreshCount();

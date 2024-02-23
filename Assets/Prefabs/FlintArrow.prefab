@@ -236,9 +236,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackDamage: 10
-  knockbackForce: {x: 5, y: 0}
+  knockbackForce: {x: 3, y: 0}
   mutiplier: 1
-  moveSpeed: {x: 20, y: 1}
+  moveSpeed: {x: 10, y: 1}
   destroyTime: 150
   pickUp: 0
 --- !u!1 &6072170853069180836
