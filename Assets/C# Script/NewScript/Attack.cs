@@ -22,7 +22,9 @@ public class Attack : MonoBehaviour
 
         if (damagable != null)
         {
-            Vector2 deliveredKnockback = transform.parent.localScale.x > 0 ? knockbackForce : new Vector2(- knockbackForce.x, knockbackForce.y);
+            Vector2 playerDirection = (collision.transform.position - transform.position).normalized;
+            Vector2 deliveredKnockback = new Vector2(knockbackForce.x * playerDirection.x, knockbackForce.y);
+            //Vector2 deliveredKnockback = transform.parent.localScale.x > 0 ? knockbackForce : new Vector2(-knockbackForce.x, knockbackForce.y);
             //Hit
             damagable.Hit(attackDamage, deliveredKnockback, false);
             Debug.Log(collision.name + " hit for " + attackDamage + " damage");

@@ -283,9 +283,20 @@ public class NewPlayerController : MonoBehaviour
     {
         if (context.started && touchingDirections.isGrounded)
         {
-            isCrouch = !isCrouch;
-            ChangePlayerCollider();
-            Debug.Log("Crouching: " + isCrouch);
+            if (isCrouch && !touchingDirections.isCeiling)
+            {
+                isCrouch = false;
+                ChangePlayerCollider();
+                Debug.Log("Crouching: " + isCrouch);
+                return;
+            }
+            if (!isCrouch)
+            {
+                isCrouch = true;
+                ChangePlayerCollider();
+                Debug.Log("Crouching: " + isCrouch);
+                return;
+            }
         }
     }
 
@@ -296,7 +307,8 @@ public class NewPlayerController : MonoBehaviour
             //1.76 -> 1.26
             playerCollider.size = new Vector2(playerCollider.size.x, playerCollider.size.y - 0.5f);
             playerCollider.offset = new Vector2(playerCollider.offset.x, playerCollider.offset.y - 0.25f);
-        } else
+        }
+        else
         {
             //1.26 -> 1.76
             playerCollider.size = new Vector2(playerCollider.size.x, playerCollider.size.y + 0.5f);
