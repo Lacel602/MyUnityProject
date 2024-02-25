@@ -45,7 +45,7 @@ public class Skeleton : MonoBehaviour
         Right, Left
     }
     private Vector2 walkDirectionVector = Vector2.left;
-    private WalkEnum _walkDirection;
+    private WalkEnum _walkDirection = WalkEnum.Left;
     public WalkEnum WalkDirection
     {
         get
@@ -91,12 +91,8 @@ public class Skeleton : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (touchingDirections.isGrounded && touchingDirections.isOnWall && Mathf.Abs(rb.velocity.x) > 0.0001)
+        if (touchingDirections.isGrounded && touchingDirections.isOnWall)
         {
-            if (touchingDirections.isOnWall)
-            {
-                Debug.Log("Wallllllllllllll");
-            }
             FlipDirection();
         }
 
@@ -116,23 +112,23 @@ public class Skeleton : MonoBehaviour
             }
         }
     }
-
-    private void FlipDirection()
+    public void FlipDirection()
     {
         if (WalkDirection == WalkEnum.Right)
         {
             WalkDirection = WalkEnum.Left;
+            Debug.Log("Right to left");
         }
         else if (WalkDirection == WalkEnum.Left)
         {
             WalkDirection = WalkEnum.Right;
+            Debug.Log("Left to Right");
         }
         else
         {
             Debug.LogError("Current walkDirection is not set to valid value");
         }
     }
-
     public void OnCliffDetected()
     {
         FlipDirection();

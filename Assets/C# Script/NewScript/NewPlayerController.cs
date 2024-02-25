@@ -21,6 +21,8 @@ public class NewPlayerController : MonoBehaviour
     private TouchingDirections touchingDirections;
     private Damagable damagable;
 
+    private CapsuleCollider2D playerCollider;
+
     [SerializeField]
     private bool _isFacingRight = true;
 
@@ -89,9 +91,14 @@ public class NewPlayerController : MonoBehaviour
                         {
                             return walkSpeed * 1.5f;
                         }
+                        else if (isCrouch)
+                        {
+                            return walkSpeed * 0.5f;
+                        }
                         else
                         {
                             return walkSpeed;
+
                         }
                     }
                     else
@@ -157,6 +164,7 @@ public class NewPlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
         touchingDirections = GetComponent<TouchingDirections>();
         damagable = GetComponent<Damagable>();
+        playerCollider = GetComponent<CapsuleCollider2D>();
     }
 
     void Start()
@@ -205,7 +213,7 @@ public class NewPlayerController : MonoBehaviour
 
     public void OnRun(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
-        if (context.started)
+        if (context.started && !isCrouch)
         {
             isRunning = true;
         }
@@ -217,7 +225,7 @@ public class NewPlayerController : MonoBehaviour
 
     public void OnJump(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
-        if (context.started && touchingDirections.isGrounded && canMove)
+        if (context.started && touchingDirections.isGrounded && canMove && !isCrouch)
         {
             animator.SetTrigger(AnimationStrings.jumpTrigger);
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
@@ -243,7 +251,8 @@ public class NewPlayerController : MonoBehaviour
             if (inventoryManager.RemoveItem(inventoryManager.itemsToPickUp[0]))
             {
                 HoldingBow = true;
-            } else
+            }
+            else
             {
                 //Display speech box
                 outOfArrow.SetActive(true);
@@ -258,6 +267,43 @@ public class NewPlayerController : MonoBehaviour
     public float bowHoldingTime = 0f;
     [HideInInspector]
     public int charged = 1;
+    private bool isCrouch
+    {
+        get
+        {
+            return animator.GetBool(AnimationStrings.isCrouch);
+        }
+
+        set
+        {
+            animator.SetBool(AnimationStrings.isCrouch, value);
+        }
+    }
+    public void OnCrouch(UnityEngine.InputSystem.InputAction.CallbackContext context)
+    {
+        if (context.started && touchingDirections.isGrounded)
+        {
+            isCrouch = !isCrouch;
+            ChangePlayerCollider();
+            Debug.Log("Crouching: " + isCrouch);
+        }
+    }
+
+    private void ChangePlayerCollider()
+    {
+        if (isCrouch)
+        {
+            //1.76 -> 1.26
+            playerCollider.size = new Vector2(playerCollider.size.x, playerCollider.size.y - 0.5f);
+            playerCollider.offset = new Vector2(playerCollider.offset.x, playerCollider.offset.y - 0.25f);
+        } else
+        {
+            //1.26 -> 1.76
+            playerCollider.size = new Vector2(playerCollider.size.x, playerCollider.size.y + 0.5f);
+            playerCollider.offset = new Vector2(playerCollider.offset.x, playerCollider.offset.y + 0.25f);
+        }
+    }
+
     private void Update()
     {
         CheckingChargeBow();

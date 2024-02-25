@@ -29,7 +29,7 @@ public class Knight : MonoBehaviour
         Right, Left
     }
     private Vector2 walkDirectionVector = Vector2.right;
-    private WalkEnum _walkDirection;
+    private WalkEnum _walkDirection = WalkEnum.Right;
 
     public WalkEnum WalkDirection
     {
@@ -50,8 +50,8 @@ public class Knight : MonoBehaviour
                 {
                     walkDirectionVector = Vector2.left;
                 }
-            }
-            _walkDirection = value;
+                _walkDirection = value;
+            }        
         }
     }
     private void Awake()
@@ -106,10 +106,6 @@ public class Knight : MonoBehaviour
     {
         if (touchingDirections.isGrounded && touchingDirections.isOnWall && Mathf.Abs(rb.velocity.x) > 0.001)
         {
-            if (touchingDirections.isOnWall)
-            {
-                Debug.Log("Wallllll");
-            }
             FlipDirection();
         }
 

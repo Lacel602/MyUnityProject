@@ -17,7 +17,6 @@ public class parallaxBackground : MonoBehaviour
         lastCameraPosition = cameraTransform.position;
         startPos = cameraTransform.position.x;
         imageLength = GetComponent<SpriteRenderer>().bounds.size.x;
-        Debug.Log("image length = " + imageLength);
     }
 
     private void Update()

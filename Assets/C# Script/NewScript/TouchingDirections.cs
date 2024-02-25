@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class TouchingDirections : MonoBehaviour
 {
+    public bool facingRightAtStart;
     public ContactFilter2D castFilter;
 
     public float groundDistance = 0.05f;
@@ -27,7 +28,7 @@ public class TouchingDirections : MonoBehaviour
             return _isGrounded;
         }
         private set
-        {           
+        {
             _isGrounded = value;
             animator.SetBool(AnimationStrings.isGrounded, value);
         }
@@ -47,7 +48,7 @@ public class TouchingDirections : MonoBehaviour
         }
     }
 
-    private bool _isCeiling;   
+    private bool _isCeiling;
     public bool isCeiling
     {
         get
@@ -61,7 +62,17 @@ public class TouchingDirections : MonoBehaviour
         }
     }
 
-    private Vector2 wallCheckDirection => gameObject.transform.localScale.x > 0 ? Vector2.right : Vector2.left;
+    private Vector2 wallCheckDirection()
+    {
+        if (facingRightAtStart)
+        {
+            return gameObject.transform.localScale.x > 0 ? Vector2.right : Vector2.left;
+        }
+        else
+        {
+            return gameObject.transform.localScale.x < 0 ? Vector2.right : Vector2.left;
+        }
+    }
 
     private void Awake()
     {
@@ -72,7 +83,7 @@ public class TouchingDirections : MonoBehaviour
     private void FixedUpdate()
     {
         isGrounded = touchingCol.Cast(Vector2.down, castFilter, groundHits, groundDistance) > 0;
-        isOnWall = touchingCol.Cast(wallCheckDirection, castFilter, wallHits, wallDistance) > 0;
+        isOnWall = touchingCol.Cast(wallCheckDirection(), castFilter, wallHits, wallDistance) > 0;
         isCeiling = touchingCol.Cast(Vector2.up, castFilter, ceilingHits, ceilingDistance) > 0;
     }
 }

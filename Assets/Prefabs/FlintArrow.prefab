@@ -217,7 +217,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 0.4
+  m_GravityScale: 1
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -238,7 +238,7 @@ MonoBehaviour:
   attackDamage: 10
   knockbackForce: {x: 3, y: 0}
   mutiplier: 1
-  moveSpeed: {x: 10, y: 1}
+  moveSpeed: {x: 13, y: 1}
   destroyTime: 150
   pickUp: 0
 --- !u!1 &6072170853069180836

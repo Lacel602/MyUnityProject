@@ -23,5 +23,6 @@ namespace Assets.C__Script.NewScript.Animation
         internal static string lockVelocity = "lockVelocity";
         internal static string attackCooldown = "attackCooldown";
         internal static string isRangedAttacking = "isRangedAttacking";
+        internal static string isCrouch = "isCrouch";
     }
 }
