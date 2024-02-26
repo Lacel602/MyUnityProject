@@ -31,6 +31,8 @@ public class NewPlayerController : MonoBehaviour
 
     public GameObject outOfArrow;
 
+    private Vector3 lastGroundPosition;
+
     public bool isFacingRight
     {
         get
@@ -140,6 +142,11 @@ public class NewPlayerController : MonoBehaviour
         {
             return animator.GetBool(AnimationStrings.isAlive);
         }
+        set
+        {
+            animator.SetBool(AnimationStrings.isAlive, value);
+            Debug.Log("isAlive: " + value);
+        }
     }
 
     private bool _holdingBow = false;
@@ -180,6 +187,7 @@ public class NewPlayerController : MonoBehaviour
             lastSpeed = currentSpeed;
         }
         animator.SetFloat(AnimationStrings.yVelocity, rb.velocity.y);
+        //SavingLastGroundPosition();
     }
 
     public void OnMove(UnityEngine.InputSystem.InputAction.CallbackContext context)
@@ -319,6 +327,20 @@ public class NewPlayerController : MonoBehaviour
     private void Update()
     {
         CheckingChargeBow();
+       
+    }
+
+    private void SavingLastGroundPosition()
+    {
+        if (touchingDirections.isGrounded)
+        {
+            lastGroundPosition = transform.position;
+        }
+    }
+
+    public void ReturnToLastGroundPos()
+    {
+        transform.position = lastGroundPosition;
     }
 
     private void CheckingChargeBow()

@@ -129,9 +129,24 @@ public class Skeleton : MonoBehaviour
             Debug.LogError("Current walkDirection is not set to valid value");
         }
     }
+
+    public void OnHit(float damage, Vector2 knockback)
+    {
+        rb.velocity = new Vector2(knockback.x, rb.velocity.y + knockback.y);
+    }
     public void OnCliffDetected()
     {
         FlipDirection();
+    }
+
+    public void OnDeath()
+    {
+        Destroy(gameObject);
+    }
+
+    public void DisableAttackHitBox()
+    {
+        transform.Find("Attack").gameObject.SetActive(false);
     }
 
 }

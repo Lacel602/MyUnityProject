@@ -4,24 +4,22 @@ using UnityEngine;
 
 public class TrapLogic : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject player;
-    private PlatformMovement platformMovement;
-    private HealthSystem healthSystem;
-
-    private void Awake()
-    {
-        player = GameObject.FindWithTag("Player");
-        platformMovement = player.GetComponent<PlatformMovement>();
-        healthSystem = player.GetComponent<HealthSystem>();
-    }
+    public Vector2 knockBack = Vector2.zero;
+    public float damage = 1000f;
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.name == "Player")
+        if (collision.gameObject.CompareTag("Player"))
         {
-            platformMovement.ReturnLastGroundedPosition();
-            healthSystem.Damaged(100);
-            Debug.Log("Trap Trigger");
+            Damagable damagable = collision.gameObject.GetComponent<Damagable>();
+            if (damagable != null)
+            {
+                damagable.Hit(damage, knockBack, false);
+                NewPlayerController controller = collision.gameObject.GetComponent<NewPlayerController>();
+                ParticleSystem deathEFX = controller.transform.Find("DeathEFX").GetComponent<ParticleSystem>();
+                deathEFX.Play();
+                controller.IsAlive = false;
+                //controller.ReturnToLastGroundPos();
+            }
         }
     }
 
