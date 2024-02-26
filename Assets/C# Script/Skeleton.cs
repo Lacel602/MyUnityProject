@@ -117,12 +117,12 @@ public class Skeleton : MonoBehaviour
         if (WalkDirection == WalkEnum.Right)
         {
             WalkDirection = WalkEnum.Left;
-            Debug.Log("Right to left");
+            //Debug.Log("Right to left");
         }
         else if (WalkDirection == WalkEnum.Left)
         {
             WalkDirection = WalkEnum.Right;
-            Debug.Log("Left to Right");
+            //Debug.Log("Left to Right");
         }
         else
         {

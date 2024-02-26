@@ -33,6 +33,8 @@ public class NewPlayerController : MonoBehaviour
 
     private Vector3 lastGroundPosition;
 
+    private int jumpTime = 2;
+
     public bool isFacingRight
     {
         get
@@ -79,6 +81,7 @@ public class NewPlayerController : MonoBehaviour
     }
 
     private float lastSpeed;
+
     private float currentSpeed
     {
         get
@@ -151,7 +154,6 @@ public class NewPlayerController : MonoBehaviour
 
     private bool _holdingBow = false;
 
-    //private GameObject 
     public bool HoldingBow
     {
         get
@@ -165,6 +167,24 @@ public class NewPlayerController : MonoBehaviour
         }
     }
 
+    [HideInInspector]
+    public float bowHoldingTime = 0f;
+
+    [HideInInspector]
+    public int charged = 1;
+
+    private bool isCrouch
+    {
+        get
+        {
+            return animator.GetBool(AnimationStrings.isCrouch);
+        }
+
+        set
+        {
+            animator.SetBool(AnimationStrings.isCrouch, value);
+        }
+    }
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -188,6 +208,11 @@ public class NewPlayerController : MonoBehaviour
         }
         animator.SetFloat(AnimationStrings.yVelocity, rb.velocity.y);
         //SavingLastGroundPosition();
+
+        if (touchingDirections.isGrounded)
+        {
+            jumpTime = 2;
+        }
     }
 
     public void OnMove(UnityEngine.InputSystem.InputAction.CallbackContext context)
@@ -231,10 +256,14 @@ public class NewPlayerController : MonoBehaviour
         }
     }
 
+    [SerializeField]
+    private GameObject JumpEFX;
     public void OnJump(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
-        if (context.started && touchingDirections.isGrounded && canMove && !isCrouch)
+        if (context.started && canMove && !isCrouch && (jumpTime > 1))
         {
+            jumpTime--;
+            Instantiate(JumpEFX, new Vector3(transform.position.x, transform.position.y - 0.4f, transform.position.z), Quaternion.identity);
             animator.SetTrigger(AnimationStrings.jumpTrigger);
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
         }
@@ -242,7 +271,7 @@ public class NewPlayerController : MonoBehaviour
 
     public void OnAttack(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
-        if (context.started)
+        if (context.started && touchingDirections.isGrounded)
         {
             animator.SetTrigger(AnimationStrings.attackTrigger);
         }
@@ -252,6 +281,7 @@ public class NewPlayerController : MonoBehaviour
     {
         rb.velocity = new Vector2(knockback.x, rb.velocity.y + knockback.y);
     }
+
     public void OnRangedAttack(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
         if (context.started)
@@ -271,22 +301,9 @@ public class NewPlayerController : MonoBehaviour
             HoldingBow = false;
         }
     }
-    [HideInInspector]
-    public float bowHoldingTime = 0f;
-    [HideInInspector]
-    public int charged = 1;
-    private bool isCrouch
-    {
-        get
-        {
-            return animator.GetBool(AnimationStrings.isCrouch);
-        }
 
-        set
-        {
-            animator.SetBool(AnimationStrings.isCrouch, value);
-        }
-    }
+
+
     public void OnCrouch(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
         if (context.started && touchingDirections.isGrounded)
@@ -327,7 +344,7 @@ public class NewPlayerController : MonoBehaviour
     private void Update()
     {
         CheckingChargeBow();
-       
+        IncreaseFallSpeed();
     }
 
     private void SavingLastGroundPosition()
@@ -361,6 +378,23 @@ public class NewPlayerController : MonoBehaviour
         else if (bowHoldingTime >= 1f)
         {
             charged = 3;
+        }
+    }
+
+    [SerializeField]
+    private float fallSpeedBuff = 1.5f;
+    private bool fallBuff = false;
+    private void IncreaseFallSpeed()
+    {
+        if (rb.velocity.y < -0.01f && !fallBuff)
+        {
+            Debug.Log("Buff fall speed");
+            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y - fallSpeedBuff);
+            fallBuff = true;
+        }
+        if (rb.velocity.y >= 0f)
+        {
+            fallBuff = false;
         }
     }
 

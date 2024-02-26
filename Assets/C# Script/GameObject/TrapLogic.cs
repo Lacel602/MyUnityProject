@@ -15,7 +15,7 @@ public class TrapLogic : MonoBehaviour
             {
                 damagable.Hit(damage, knockBack, false);
                 NewPlayerController controller = collision.gameObject.GetComponent<NewPlayerController>();
-                ParticleSystem deathEFX = controller.transform.Find("DeathEFX").GetComponent<ParticleSystem>();
+                ParticleSystem deathEFX = controller.transform.Find("Effect").Find("DeathEFX").GetComponent<ParticleSystem>();
                 deathEFX.Play();
                 controller.IsAlive = false;
                 //controller.ReturnToLastGroundPos();

@@ -6134,12 +6134,12 @@ GameObject:
   m_Component:
   - component: {fileID: 347052550}
   m_Layer: 0
-  m_Name: Enemies
+  m_Name: Spawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &347052550
 Transform:
   m_ObjectHideFlags: 0
@@ -7794,28 +7794,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 90ec13cb19b291442ae062df8ebe4eef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &539011693 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1407858982, guid: f19f23e0ac3735047aa93d97a93ff732, type: 3}
-  m_PrefabInstance: {fileID: 7656680854724646011}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f66ad8a3bf886743abd737ce901c6e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &539011698 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7656680856119913816, guid: f19f23e0ac3735047aa93d97a93ff732, type: 3}
-  m_PrefabInstance: {fileID: 7656680854724646011}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d4377ba408b530245a5e84c8d7e3a246, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &548071645
@@ -16262,6 +16240,38 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 61c189fb1e249ae408267890fccf2da0, type: 3}
+--- !u!1 &1014760411
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1014760412}
+  m_Layer: 7
+  m_Name: Effect
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1014760412
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1014760411}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1402128157}
+  m_Father: {fileID: 1234217761}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1025293603
 GameObject:
   m_ObjectHideFlags: 0
@@ -28081,7 +28091,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 4
+  m_GravityScale: 3
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -28156,7 +28166,7 @@ Transform:
   - {fileID: 341004662}
   - {fileID: 2085972549}
   - {fileID: 681855359}
-  - {fileID: 1402128157}
+  - {fileID: 1014760412}
   m_Father: {fileID: 0}
   m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -28175,10 +28185,12 @@ MonoBehaviour:
   inventoryManager: {fileID: 874014911}
   walkSpeed: 8
   _isFacingRight: 1
-  jumpForce: 16
+  jumpForce: 12
   outOfArrow: {fileID: 708331780}
   bowHoldingTime: 0
   charged: 0
+  JumpEFX: {fileID: 3400380740163331872, guid: 2c07b93b1145ba647a52382e0ac80d70, type: 3}
+  fallSpeedBuff: 1.5
 --- !u!114 &1234217763
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29898,13 +29910,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1402128156}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.81, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.81000006, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1234217761}
-  m_RootOrder: 5
+  m_Father: {fileID: 1014760412}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!199 &1402128158
 ParticleSystemRenderer:
@@ -38140,42 +38152,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1407858982, guid: f19f23e0ac3735047aa93d97a93ff732, type: 3}
-      propertyPath: _maxHealth
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 1407858982, guid: f19f23e0ac3735047aa93d97a93ff732, type: 3}
-      propertyPath: damageableHit.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1407858982, guid: f19f23e0ac3735047aa93d97a93ff732, type: 3}
-      propertyPath: damageableHit.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1407858982, guid: f19f23e0ac3735047aa93d97a93ff732, type: 3}
-      propertyPath: damageableHit.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 539011698}
-    - target: {fileID: 1407858982, guid: f19f23e0ac3735047aa93d97a93ff732, type: 3}
-      propertyPath: damageableHit.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1407858982, guid: f19f23e0ac3735047aa93d97a93ff732, type: 3}
-      propertyPath: damageableHit.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnHit
-      objectReference: {fileID: 0}
-    - target: {fileID: 1407858982, guid: f19f23e0ac3735047aa93d97a93ff732, type: 3}
-      propertyPath: damageableHit.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Skeleton, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 1407858982, guid: f19f23e0ac3735047aa93d97a93ff732, type: 3}
-      propertyPath: damageableHit.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 1339948641979128197, guid: f19f23e0ac3735047aa93d97a93ff732, type: 3}
-      propertyPath: ownDamagable
-      value: 
-      objectReference: {fileID: 539011693}
     - target: {fileID: 7656680856119913818, guid: f19f23e0ac3735047aa93d97a93ff732, type: 3}
       propertyPath: m_RootOrder
       value: 11
