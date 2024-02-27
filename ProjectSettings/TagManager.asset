@@ -8,6 +8,7 @@ TagManager:
   - Arrow
   - Speech
   - Magnet
+  - InventoryManage
   layers:
   - Default
   - TransparentFX
@@ -22,7 +23,7 @@ TagManager:
   - GroundDetection
   - ArrowHitBox
   - Obstacle
-  - 
+  - DroppedItem
   - 
   - 
   - 

@@ -6663,7 +6663,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fd70eeb640543c4c8af76cd895eb454, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waypointsArray:
+  waypoints:
   - {fileID: 1459932000}
   - {fileID: 1025293603}
   platformSpeed: 3.5
@@ -15410,7 +15410,7 @@ GameObject:
   - component: {fileID: 874014911}
   m_Layer: 0
   m_Name: InventoryManager
-  m_TagString: Untagged
+  m_TagString: InventoryManage
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -17483,7 +17483,7 @@ TilemapRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 1ae9d6f06323dfb459310bd8da7a4145, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -37998,6 +37998,58 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1760013905766270766, guid: 39591acfe7b871145975b1f053236399, type: 3}
+      propertyPath: SizeModule.enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1760013905766270766, guid: 39591acfe7b871145975b1f053236399, type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[0].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1760013905766270766, guid: 39591acfe7b871145975b1f053236399, type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[1].value
+      value: 0.15094338
+      objectReference: {fileID: 0}
+    - target: {fileID: 1760013905766270766, guid: 39591acfe7b871145975b1f053236399, type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[0].inSlope
+      value: -0.34984422
+      objectReference: {fileID: 0}
+    - target: {fileID: 1760013905766270766, guid: 39591acfe7b871145975b1f053236399, type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[1].inSlope
+      value: -2.5808468
+      objectReference: {fileID: 0}
+    - target: {fileID: 1760013905766270766, guid: 39591acfe7b871145975b1f053236399, type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[0].inWeight
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1760013905766270766, guid: 39591acfe7b871145975b1f053236399, type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[0].outSlope
+      value: -0.34984422
+      objectReference: {fileID: 0}
+    - target: {fileID: 1760013905766270766, guid: 39591acfe7b871145975b1f053236399, type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[1].inWeight
+      value: 0.14036638
+      objectReference: {fileID: 0}
+    - target: {fileID: 1760013905766270766, guid: 39591acfe7b871145975b1f053236399, type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[1].outSlope
+      value: -2.5808468
+      objectReference: {fileID: 0}
+    - target: {fileID: 1760013905766270766, guid: 39591acfe7b871145975b1f053236399, type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[0].outWeight
+      value: 0.23190926
+      objectReference: {fileID: 0}
+    - target: {fileID: 1760013905766270766, guid: 39591acfe7b871145975b1f053236399, type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[1].outWeight
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1760013905766270766, guid: 39591acfe7b871145975b1f053236399, type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[0].tangentMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1760013905766270766, guid: 39591acfe7b871145975b1f053236399, type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[1].tangentMode
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1760013905832377029, guid: 39591acfe7b871145975b1f053236399, type: 3}
       propertyPath: m_RootOrder
       value: 18
@@ -38046,6 +38098,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: SmallCrate
       objectReference: {fileID: 0}
+    - target: {fileID: 1760013906755394423, guid: 39591acfe7b871145975b1f053236399, type: 3}
+      propertyPath: itemToSpawn.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1760013906755394423, guid: 39591acfe7b871145975b1f053236399, type: 3}
+      propertyPath: itemToSpawn.Array.data[0]
+      value: 
+      objectReference: {fileID: 8723329108157870877, guid: df700be1525bd2e4c9fb2b7c1b559351, type: 3}
+    - target: {fileID: 1760013906755394423, guid: 39591acfe7b871145975b1f053236399, type: 3}
+      propertyPath: itemToSpawn.Array.data[1]
+      value: 
+      objectReference: {fileID: 8723329108157870877, guid: df700be1525bd2e4c9fb2b7c1b559351, type: 3}
+    - target: {fileID: 1760013906755394423, guid: 39591acfe7b871145975b1f053236399, type: 3}
+      propertyPath: itemToSpawn.Array.data[2]
+      value: 
+      objectReference: {fileID: 8723329108157870877, guid: df700be1525bd2e4c9fb2b7c1b559351, type: 3}
+    - target: {fileID: 1760013906755394423, guid: 39591acfe7b871145975b1f053236399, type: 3}
+      propertyPath: itemToSpawn.Array.data[3]
+      value: 
+      objectReference: {fileID: 8723329108157870877, guid: df700be1525bd2e4c9fb2b7c1b559351, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 39591acfe7b871145975b1f053236399, type: 3}
 --- !u!1001 &6125439972435017668

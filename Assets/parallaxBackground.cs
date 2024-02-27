@@ -25,15 +25,24 @@ public class parallaxBackground : MonoBehaviour
         transform.position += new Vector3(deltamoveMent.x * parallaxMutiplier.x, deltamoveMent.y * parallaxMutiplier.y, 0);
         lastCameraPosition = cameraTransform.position;
 
-        if ((cameraTransform.position.x - startPos) * (1 - parallaxMutiplier.x) >= imageLength)
+        //if ((cameraTransform.position.x - startPos) * (1 - parallaxMutiplier.x) >= imageLength)
+        //{
+        //    transform.position = new Vector3(transform.position.x + imageLength, transform.position.y, transform.position.z);
+        //    startPos = cameraTransform.position.x;
+        //}
+        //else if ((cameraTransform.position.x - startPos) * (1 - parallaxMutiplier.x) < -imageLength)
+        //{ 
+        //    transform.position = new Vector3(transform.position.x - imageLength, transform.position.y, transform.position.z);
+        //    startPos = cameraTransform.position.x;
+        //}
+
+        if (cameraTransform.position.x >= transform.position.x + imageLength)
         {
             transform.position = new Vector3(transform.position.x + imageLength, transform.position.y, transform.position.z);
-            startPos = cameraTransform.position.x;
         }
-        else if ((cameraTransform.position.x - startPos) * (1 - parallaxMutiplier.x) <= -imageLength)
-        { 
+        if (cameraTransform.position.x <= transform.position.x - imageLength)
+        {
             transform.position = new Vector3(transform.position.x - imageLength, transform.position.y, transform.position.z);
-            startPos = cameraTransform.position.x;
         }
     }
 }

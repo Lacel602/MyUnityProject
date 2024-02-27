@@ -60,7 +60,7 @@ public class Arrow : MonoBehaviour
 
     private bool canHit = true;
     [HideInInspector]
-    public bool pickUp = false;
+    public bool canBePickedUp = false;
     private bool autoDestroy = false;
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -69,7 +69,7 @@ public class Arrow : MonoBehaviour
             rb2d.isKinematic = true;
             rb2d.velocity = Vector2.zero;
             canHit = false;
-            pickUp = true;
+            canBePickedUp = true;
             //Start auto destroy
             autoDestroy = true;
         }

@@ -403,7 +403,7 @@ public class NewPlayerController : MonoBehaviour
         if (collision.CompareTag("Arrow"))
         {
             Arrow arrow = collision.gameObject.GetComponent<Arrow>();
-            if (arrow.pickUp)
+            if (arrow.canBePickedUp)
             {
                 inventoryManager.AddItem(inventoryManager.itemsToPickUp[0]);
                 Destroy(collision.gameObject);
