@@ -1,11 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using UnityEngine;
 
 public class Crate : MonoBehaviour
 {
     [SerializeField]
     public GameObject[] itemToSpawn;
+
+    [SerializeField]
+    private Vector2 itemVelocity = new Vector2(1, 5);
 
     private int numberOfHits = 0;
     private ParticleSystem destroyEFX;
@@ -30,15 +34,17 @@ public class Crate : MonoBehaviour
             if (numberOfHits == 2)
             {
                 //Spawn item
+                GameObject spawnedItem;
+                Rigidbody2D itemRb;
                 if (itemToSpawn.Length > 0)
                 {
                     foreach (var item in itemToSpawn)
                     {
-                        GameObject spawnedItem = Instantiate(item, transform.position, Quaternion.identity);
-                        Rigidbody2D rb = spawnedItem.GetComponent<Rigidbody2D>();
-                        rb.velocity = new Vector2(Random.Range(1f, 2f), 5f);
+                        spawnedItem = Instantiate(item, transform.position, Quaternion.identity);
+                        itemRb = spawnedItem.GetComponent<Rigidbody2D>();
+                        itemRb.velocity = new Vector2(Random.Range(-itemVelocity.x, itemVelocity.x), Random.Range(itemVelocity.y - 1f, itemVelocity.y + 1f));
                     }
-                }             
+                }
                 //Destroy object
                 destroyEFX.Play();
                 StartCoroutine("DestroyObject");

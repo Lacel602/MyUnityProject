@@ -23,7 +23,7 @@ public class Arrow : MonoBehaviour
     void Start()
     {
         float random = UnityEngine.Random.Range(0.9f, 1.1f);
-        float moveForce = transform.localScale.x >= 0 ? moveSpeed.x * transform.localScale.x + mutiplier * 7f * random : moveSpeed.x * transform.localScale.x - mutiplier * 7f * random;  
+        float moveForce = transform.localScale.x >= 0 ? moveSpeed.x * transform.localScale.x + mutiplier * 9f * random : moveSpeed.x * transform.localScale.x - mutiplier * 7f * random;  
         rb2d.AddForce(new Vector2(moveForce, moveSpeed.y * mutiplier * 0.5f * random), ForceMode2D.Impulse);
 
         if (mutiplier >= 3)

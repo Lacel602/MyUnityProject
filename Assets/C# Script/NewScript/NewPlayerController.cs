@@ -286,11 +286,11 @@ public class NewPlayerController : MonoBehaviour
     {
         if (context.started)
         {
-            if (inventoryManager.RemoveItem(inventoryManager.itemsToPickUp[0]))
+            if (inventoryManager.RemoveItem(inventoryManager.itemsToPickUp[0]) && !isCrouch)
             {
                 HoldingBow = true;
             }
-            else
+            else if (!inventoryManager.RemoveItem(inventoryManager.itemsToPickUp[0]))
             {
                 //Display speech box
                 outOfArrow.SetActive(true);
