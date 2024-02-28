@@ -2,6 +2,7 @@ using Assets.C__Script.NewScript.Animation;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using static Knight;
 
@@ -12,6 +13,9 @@ public class Skeleton : MonoBehaviour
     public float maxSpeed = 3f;
     public float walkStopRate = 1f;
 
+    [Header("Detection")]
+    [SerializeField]
+    private bool hasTarget = false;
     [Header("Component")]
     [SerializeField]
     private DetectionZone attackZone;
@@ -45,6 +49,7 @@ public class Skeleton : MonoBehaviour
         Right, Left
     }
     private Vector2 walkDirectionVector = Vector2.left;
+
     private WalkEnum _walkDirection = WalkEnum.Left;
     public WalkEnum WalkDirection
     {
@@ -71,6 +76,7 @@ public class Skeleton : MonoBehaviour
     }
 
     private bool _hasTarget = false;
+
     public bool HasTarget
     {
         get { return _hasTarget; }
@@ -89,26 +95,69 @@ public class Skeleton : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if (attackZone.detectedColliders.Count > 0)
+        {
+            hasTarget = true;
+        }
+        else
+        {
+            hasTarget = false;
+        }
+    }
+    Vector2 targetDirectionVector = Vector2.zero;
     private void FixedUpdate()
     {
-        if (touchingDirections.isGrounded && touchingDirections.isOnWall)
+        if (hasTarget)
+        {
+            targetDirectionVector = (attackZone.detectedColliders.FirstOrDefault().transform.position - transform.position).normalized;
+        }
+        else
+        {
+            targetDirectionVector = Vector2.zero;
+        }
+
+        if (targetDirectionVector != Vector2.zero)
+        {
+            if ((WalkDirection == WalkEnum.Left && targetDirectionVector.x > 0)||(WalkDirection == WalkEnum.Right && targetDirectionVector.x < 0))
+            {
+                FlipDirection();
+            }
+        }
+
+        if (touchingDirections.isGrounded && touchingDirections.isOnWall && !hasTarget)
         {
             FlipDirection();
         }
 
+
         if (!damagable.LockVelocity)
         {
-            if (CanMove)
             {
-                rb.velocity = new Vector2(
-                    Mathf.Clamp(
-                        rb.velocity.x +
-                        (walkAcceleration * walkDirectionVector.x * Time.fixedDeltaTime), -maxSpeed, maxSpeed)
-                    , rb.velocity.y);
-            }
-            else
-            {
-                rb.velocity = new Vector2(Mathf.Lerp(rb.velocity.x, 0, walkStopRate), rb.velocity.y);
+                if (CanMove)
+                {
+                    rb.velocity = hasTarget ?
+                        new Vector2(
+                            Mathf.Clamp(
+                            rb.velocity.x +
+                            (walkAcceleration * 1.5f * (targetDirectionVector.x) * Time.fixedDeltaTime),
+                            -maxSpeed * 1.7f,
+                            maxSpeed * 1.7f)
+                        , rb.velocity.y)
+                             :
+                        new Vector2(
+                            Mathf.Clamp(
+                            rb.velocity.x +
+                            (walkAcceleration * (walkDirectionVector.x) * Time.fixedDeltaTime),
+                            -maxSpeed,
+                            maxSpeed)
+                        , rb.velocity.y);
+                }
+                else
+                {
+                    rb.velocity = new Vector2(Mathf.Lerp(rb.velocity.x, 0, walkStopRate), rb.velocity.y);
+                }
             }
         }
     }
@@ -148,5 +197,6 @@ public class Skeleton : MonoBehaviour
     {
         transform.Find("Attack").gameObject.SetActive(false);
     }
+
 
 }

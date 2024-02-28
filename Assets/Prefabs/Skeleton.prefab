@@ -119,7 +119,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.02994883, y: -0.043384038}
+  m_Offset: {x: 0.23675328, y: -0.043384045}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -130,7 +130,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.3000805, y: 0.41663843}
+  m_Size: {x: 1.8071147, y: 0.41663843}
   m_EdgeRadius: 0
 --- !u!114 &3627382285150412847
 MonoBehaviour:
@@ -146,7 +146,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   noCollidersRemain:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   detectedColliders: []
 --- !u!1 &4272548007474715588
 GameObject:
@@ -340,9 +352,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4377ba408b530245a5e84c8d7e3a246, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkAcceleration: 30
-  maxSpeed: 3
+  walkAcceleration: 8
+  maxSpeed: 2
   walkStopRate: 1
+  hasTarget: 0
   attackZone: {fileID: 3627382285150412847}
   cliffDetection: {fileID: 1307000551691736116}
 --- !u!95 &7656680856119913823

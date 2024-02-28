@@ -6,6 +6,7 @@ using UnityEngine.Events;
 public class DetectionZone : MonoBehaviour
 {
     public UnityEvent noCollidersRemain;
+
     [SerializeField]
     public List<Collider2D> detectedColliders = new List<Collider2D>(); 
     private Collider2D col;
