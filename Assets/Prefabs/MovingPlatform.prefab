@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1241459362880559666}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 3.51, z: 0}
+  m_LocalPosition: {x: 0, y: 12.33, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -54,7 +54,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1241459362918054003}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 51.84, y: 5.27, z: 63.60619}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -143,6 +143,7 @@ GameObject:
   - component: {fileID: 1241459363539255630}
   - component: {fileID: 1241459363539255631}
   - component: {fileID: 1241459363539255628}
+  - component: {fileID: 10885699}
   m_Layer: 3
   m_Name: SpritePlatform
   m_TagString: Untagged
@@ -177,6 +178,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fd70eeb640543c4c8af76cd895eb454, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hasToActivate: 1
+  isActivated: 0
   waypoints:
   - {fileID: 1241459362880559666}
   - {fileID: 1241459362954185712}
@@ -244,7 +247,7 @@ BoxCollider2D:
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_UsedByEffector: 0
+  m_UsedByEffector: 1
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: -0.48565125}
   m_SpriteTilingProperty:
@@ -297,6 +300,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e339a8b386e1cf4e942297ac465bf36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!251 &10885699
+PlatformEffector2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1241459363539255634}
+  m_Enabled: 1
+  m_UseColliderMask: 1
+  m_ColliderMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RotationalOffset: 0
+  m_UseOneWay: 1
+  m_UseOneWayGrouping: 0
+  m_SurfaceArc: 180
+  m_UseSideFriction: 0
+  m_UseSideBounce: 0
+  m_SideArc: 1
 --- !u!1 &1241459364390537437
 GameObject:
   m_ObjectHideFlags: 0

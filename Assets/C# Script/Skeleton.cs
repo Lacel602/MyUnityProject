@@ -22,6 +22,8 @@ public class Skeleton : MonoBehaviour
     [SerializeField]
     private DetectionZone cliffDetection;
     private Animator animator;
+    [SerializeField]
+    private GameObject exclamationMark;
 
     Rigidbody2D rb;
     private TouchingDirections touchingDirections;
@@ -97,6 +99,12 @@ public class Skeleton : MonoBehaviour
 
     private void Update()
     {
+        if (!hasTarget && attackZone.detectedColliders.Count > 0)
+        {
+            //spawn exclamation mark
+            GameObject spawnedObject = Instantiate(exclamationMark, new Vector3(transform.position.x, transform.position.y + 1.6f, transform.position.z), Quaternion.identity);
+            spawnedObject.transform.parent = transform;
+        }
         if (attackZone.detectedColliders.Count > 0)
         {
             hasTarget = true;
@@ -106,6 +114,7 @@ public class Skeleton : MonoBehaviour
             hasTarget = false;
         }
     }
+
     Vector2 targetDirectionVector = Vector2.zero;
     private void FixedUpdate()
     {
@@ -120,7 +129,7 @@ public class Skeleton : MonoBehaviour
 
         if (targetDirectionVector != Vector2.zero)
         {
-            if ((WalkDirection == WalkEnum.Left && targetDirectionVector.x > 0)||(WalkDirection == WalkEnum.Right && targetDirectionVector.x < 0))
+            if ((WalkDirection == WalkEnum.Left && targetDirectionVector.x > 0) || (WalkDirection == WalkEnum.Right && targetDirectionVector.x < 0))
             {
                 FlipDirection();
             }
@@ -141,9 +150,9 @@ public class Skeleton : MonoBehaviour
                         new Vector2(
                             Mathf.Clamp(
                             rb.velocity.x +
-                            (walkAcceleration * 1.5f * (targetDirectionVector.x) * Time.fixedDeltaTime),
-                            -maxSpeed * 1.9f,
-                            maxSpeed * 1.9f)
+                            (walkAcceleration * 1.8f * (targetDirectionVector.x) * Time.fixedDeltaTime),
+                            -maxSpeed * 2.5f,
+                            maxSpeed * 2.5f)
                         , rb.velocity.y)
                              :
                         new Vector2(

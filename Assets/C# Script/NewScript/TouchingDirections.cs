@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class TouchingDirections : MonoBehaviour
 {
+    [SerializeField]
+    private bool precisionGroundCheck = false;
+
     public bool facingRightAtStart;
     public ContactFilter2D castFilter;
 
@@ -13,6 +16,8 @@ public class TouchingDirections : MonoBehaviour
     public float ceilingDistance = 0.05f;
 
     private Collider2D touchingCol;
+    [SerializeField]
+    private Collider2D groundCol;
     private Animator animator;
 
     RaycastHit2D[] groundHits = new RaycastHit2D[5];
@@ -82,7 +87,14 @@ public class TouchingDirections : MonoBehaviour
 
     private void FixedUpdate()
     {
-        isGrounded = touchingCol.Cast(Vector2.down, castFilter, groundHits, groundDistance) > 0;
+        if (!precisionGroundCheck)
+        {
+            isGrounded = touchingCol.Cast(Vector2.down, castFilter, groundHits, groundDistance) > 0;
+        }
+        else
+        {
+            isGrounded = groundCol.Cast(Vector2.down, castFilter, groundHits, groundDistance) > 0;
+        }
         isOnWall = touchingCol.Cast(wallCheckDirection(), castFilter, wallHits, wallDistance) > 0;
         isCeiling = touchingCol.Cast(Vector2.up, castFilter, ceilingHits, ceilingDistance) > 0;
     }
