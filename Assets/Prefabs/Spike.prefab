@@ -125,4 +125,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   knockBack: {x: 0, y: 0}
-  damage: 1
+  damage: 1000

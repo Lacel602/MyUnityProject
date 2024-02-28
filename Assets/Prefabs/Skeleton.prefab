@@ -358,6 +358,7 @@ MonoBehaviour:
   hasTarget: 0
   attackZone: {fileID: 3627382285150412847}
   cliffDetection: {fileID: 1307000551691736116}
+  exclamationMark: {fileID: 2698920035126133055, guid: 2081c72680bdfab4187c0c0f741b9b6f, type: 3}
 --- !u!95 &7656680856119913823
 Animator:
   serializedVersion: 5
@@ -428,6 +429,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 038981963b80e3a4bbdaef434723fb8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  precisionGroundCheck: 0
   facingRightAtStart: 0
   castFilter:
     useTriggers: 0
@@ -446,6 +448,7 @@ MonoBehaviour:
   groundDistance: 0.05
   wallDistance: 0.2
   ceilingDistance: 0.05
+  groundCol: {fileID: 0}
   _isGrounded: 0
 --- !u!114 &1407858982
 MonoBehaviour:
