@@ -10,10 +10,17 @@ using UnityEngine.Windows;
 [RequireComponent(typeof(Rigidbody2D), typeof(TouchingDirections), typeof(Damagable))]
 public class NewPlayerController : MonoBehaviour
 {
-    public InventoryManager inventoryManager;
+    [Header("Movement")]
     [SerializeField]
     private float walkSpeed = 5f;
+    [SerializeField]
+    private float jumpForce = 16f;
+    [SerializeField]
+    private float fallSpeedBuff = 1.5f;
+    private bool fallBuff = false;
     private Vector2 playerInput;
+    [SerializeField]
+    private bool _isFacingRight = true;
 
     private Rigidbody2D rb;
     private Animator animator;
@@ -23,12 +30,13 @@ public class NewPlayerController : MonoBehaviour
 
     private CapsuleCollider2D playerCollider;
 
+    [Header("Linked component")]
     [SerializeField]
-    private bool _isFacingRight = true;
-
+    public InventoryManager inventoryManager;
     [SerializeField]
-    private float jumpForce = 16f;
-
+    public Item arrow;
+    [SerializeField]
+    private GameObject JumpEFX;
     public GameObject outOfArrow;
 
     private Vector3 lastGroundPosition;
@@ -256,8 +264,6 @@ public class NewPlayerController : MonoBehaviour
         }
     }
 
-    [SerializeField]
-    private GameObject JumpEFX;
     public void OnJump(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
         if (context.started && canMove && !isCrouch && (jumpTime >= 1))
@@ -286,18 +292,26 @@ public class NewPlayerController : MonoBehaviour
         rb.velocity = new Vector2(knockback.x, rb.velocity.y + knockback.y);
     }
 
+
     public void OnRangedAttack(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
         if (context.started)
         {
-            if (inventoryManager.RemoveItem(inventoryManager.itemsToPickUp[0]) && !isCrouch)
+            if (isCrouch)
             {
-                HoldingBow = true;
+                Debug.Log("Can't fire arrow");
             }
-            else if (!inventoryManager.RemoveItem(inventoryManager.itemsToPickUp[0]))
+            if (!isCrouch)
             {
-                //Display speech box
-                outOfArrow.SetActive(true);
+                if (inventoryManager.FindItem(arrow))
+                {
+                    HoldingBow = true;
+                }
+                else
+                {
+                    //Display speech box
+                    outOfArrow.SetActive(true);
+                }
             }
         }
         if (context.canceled)
@@ -385,9 +399,6 @@ public class NewPlayerController : MonoBehaviour
         }
     }
 
-    [SerializeField]
-    private float fallSpeedBuff = 1.5f;
-    private bool fallBuff = false;
     private void IncreaseFallSpeed()
     {
         if (rb.velocity.y < -0.01f && !fallBuff)

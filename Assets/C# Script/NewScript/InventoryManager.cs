@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public class InventoryManager : MonoBehaviour
 {
@@ -9,6 +10,20 @@ public class InventoryManager : MonoBehaviour
     public InventorySlot[] inventorySlots;
     public GameObject inventoryItemPrefab;
 
+    public bool FindItem(Item item)
+    {
+        for (int i = inventorySlots.Length - 1; i >= 0; i--)
+        {
+            InventorySlot slot = inventorySlots[i];
+            InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
+            //if slot is not occupied
+            if (itemInSlot != null && itemInSlot.item == item)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
     public bool RemoveItem(Item item)
     {
         for (int i = inventorySlots.Length - 1; i >= 0; i--)

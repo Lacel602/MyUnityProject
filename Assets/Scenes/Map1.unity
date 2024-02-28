@@ -47274,15 +47274,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e21f77012a319fa4f8fac5b8561be201, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventoryManager: {fileID: 874014911}
   walkSpeed: 7
-  _isFacingRight: 1
   jumpForce: 12
+  fallSpeedBuff: 1.5
+  _isFacingRight: 1
+  inventoryManager: {fileID: 874014911}
+  arrow: {fileID: 11400000, guid: f135debdef60c7c4c8903e4f6cd4f308, type: 2}
+  JumpEFX: {fileID: 3400380740163331872, guid: 2c07b93b1145ba647a52382e0ac80d70, type: 3}
   outOfArrow: {fileID: 708331780}
   bowHoldingTime: 0
   charged: 0
-  JumpEFX: {fileID: 3400380740163331872, guid: 2c07b93b1145ba647a52382e0ac80d70, type: 3}
-  fallSpeedBuff: 1.5
 --- !u!114 &1234217763
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63372,7 +63373,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2021392812
 RectTransform:
   m_ObjectHideFlags: 0
