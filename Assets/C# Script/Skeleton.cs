@@ -142,8 +142,8 @@ public class Skeleton : MonoBehaviour
                             Mathf.Clamp(
                             rb.velocity.x +
                             (walkAcceleration * 1.5f * (targetDirectionVector.x) * Time.fixedDeltaTime),
-                            -maxSpeed * 1.7f,
-                            maxSpeed * 1.7f)
+                            -maxSpeed * 1.9f,
+                            maxSpeed * 1.9f)
                         , rb.velocity.y)
                              :
                         new Vector2(

@@ -25,10 +25,6 @@ public class crankLogic : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Arrow"))
-        {
-            Destroy(collision);
-        }
         platform.isActivated = !platform.isActivated;
         activated = !activated;
     }

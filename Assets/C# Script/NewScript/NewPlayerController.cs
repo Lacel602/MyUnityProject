@@ -209,7 +209,7 @@ public class NewPlayerController : MonoBehaviour
         animator.SetFloat(AnimationStrings.yVelocity, rb.velocity.y);
         //SavingLastGroundPosition();
 
-        if (touchingDirections.isGrounded)
+        if (touchingDirections.isGrounded && rb.velocity.y <= 0.01)
         {
             jumpTime = 2;
         }
@@ -260,12 +260,16 @@ public class NewPlayerController : MonoBehaviour
     private GameObject JumpEFX;
     public void OnJump(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
-        if (context.started && canMove && !isCrouch && (jumpTime > 1))
+        if (context.started && canMove && !isCrouch && (jumpTime >= 1))
         {
             jumpTime--;
             Instantiate(JumpEFX, new Vector3(transform.position.x, transform.position.y - 0.4f, transform.position.z), Quaternion.identity);
             animator.SetTrigger(AnimationStrings.jumpTrigger);
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            if (jumpTime == 0)
+            {
+                animator.ResetTrigger(AnimationStrings.jumpTrigger);
+            }
         }
     }
 
@@ -388,7 +392,7 @@ public class NewPlayerController : MonoBehaviour
     {
         if (rb.velocity.y < -0.01f && !fallBuff)
         {
-            Debug.Log("Buff fall speed");
+            //Debug.Log("Buff fall speed");
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y - fallSpeedBuff);
             fallBuff = true;
         }
