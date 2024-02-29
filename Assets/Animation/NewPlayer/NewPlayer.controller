@@ -452,7 +452,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   boolName: canMove
   valueOnEnter: 0
-  valueOnExit: 0
+  valueOnExit: 1
   updateOnState: 1
   updateOnStateMachine: 0
 --- !u!1107 &-5853163328112599715
@@ -1680,7 +1680,7 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: -2450966532234036413}
-    m_Position: {x: 550, y: 160, z: 0}
+    m_Position: {x: 540, y: 140, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -4379441202654460804}
     m_Position: {x: 550, y: 10, z: 0}

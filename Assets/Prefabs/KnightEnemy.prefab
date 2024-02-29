@@ -1,5 +1,52 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5075809678703679570
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2822391713897793391}
+  - component: {fileID: 2514132187038247969}
+  m_Layer: 6
+  m_Name: HitEFX
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2822391713897793391
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5075809678703679570}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -56.648415, y: -1.4151274, z: 3.332974}
+  m_LocalScale: {x: 0.72200376, y: 0.72200376, z: 0.72200376}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8115507640850655354}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2514132187038247969
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5075809678703679570}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00ee6af0e72fc1d4ead216c7074e6a84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  listEFX:
+  - {fileID: 6244186846556618129, guid: 2b4af686af204da4cacc8ec3fdaca7ad, type: 3}
+  - {fileID: 8724682753067909249, guid: fca4d1fd9e88b624ab6d1f989f490240, type: 3}
 --- !u!1 &8115507640850655350
 GameObject:
   m_ObjectHideFlags: 0
@@ -38,6 +85,7 @@ Transform:
   - {fileID: 8115507641090920106}
   - {fileID: 8115507641558137749}
   - {fileID: 8115507641907586173}
+  - {fileID: 2822391713897793391}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -147,6 +195,7 @@ MonoBehaviour:
   walkStopRate: 1
   attackZone: {fileID: 8115507641090920108}
   cliffDetection: {fileID: 8115507641907586175}
+  hitEfx: {fileID: 2514132187038247969}
 --- !u!114 &8115507640850655359
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -159,6 +208,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 038981963b80e3a4bbdaef434723fb8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  precisionGroundCheck: 0
   facingRightAtStart: 1
   castFilter:
     useTriggers: 0
@@ -177,6 +227,7 @@ MonoBehaviour:
   groundDistance: 0.05
   wallDistance: 0.2
   ceilingDistance: 0.05
+  groundCol: {fileID: 0}
   _isGrounded: 0
 --- !u!95 &8115507640850655356
 Animator:

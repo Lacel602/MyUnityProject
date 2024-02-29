@@ -14,16 +14,16 @@ public class Skeleton : MonoBehaviour
     public float walkStopRate = 1f;
 
     [Header("Detection")]
-    [SerializeField]
-    private bool hasTarget = false;
     [Header("Component")]
     [SerializeField]
-    private DetectionZone attackZone;
+    private DetectionZone detectedZone;
     [SerializeField]
     private DetectionZone cliffDetection;
     private Animator animator;
     [SerializeField]
     private GameObject exclamationMark;
+    [SerializeField]
+    private HitEFX hitEfx;
 
     Rigidbody2D rb;
     private TouchingDirections touchingDirections;
@@ -99,28 +99,28 @@ public class Skeleton : MonoBehaviour
 
     private void Update()
     {
-        if (!hasTarget && attackZone.detectedColliders.Count > 0)
+        if (!HasTarget && detectedZone.detectedColliders.Count > 0)
         {
             //spawn exclamation mark
             GameObject spawnedObject = Instantiate(exclamationMark, new Vector3(transform.position.x, transform.position.y + 1.6f, transform.position.z), Quaternion.identity);
             spawnedObject.transform.parent = transform;
         }
-        if (attackZone.detectedColliders.Count > 0)
+        if (detectedZone.detectedColliders.Count > 0)
         {
-            hasTarget = true;
+            HasTarget = true;
         }
         else
         {
-            hasTarget = false;
+            HasTarget = false;
         }
     }
 
     Vector2 targetDirectionVector = Vector2.zero;
     private void FixedUpdate()
     {
-        if (hasTarget)
+        if (HasTarget)
         {
-            targetDirectionVector = (attackZone.detectedColliders.FirstOrDefault().transform.position - transform.position).normalized;
+            targetDirectionVector = (detectedZone.detectedColliders.FirstOrDefault().transform.position - transform.position).normalized;
         }
         else
         {
@@ -135,7 +135,7 @@ public class Skeleton : MonoBehaviour
             }
         }
 
-        if (touchingDirections.isGrounded && touchingDirections.isOnWall && !hasTarget)
+        if (touchingDirections.isGrounded && touchingDirections.isOnWall && !HasTarget)
         {
             FlipDirection();
         }
@@ -146,13 +146,14 @@ public class Skeleton : MonoBehaviour
             {
                 if (CanMove)
                 {
-                    rb.velocity = hasTarget ?
+                    //Debug.Log("Has target: " + HasTarget);
+                    rb.velocity = HasTarget ?
                         new Vector2(
                             Mathf.Clamp(
                             rb.velocity.x +
-                            (walkAcceleration * 1.8f * (targetDirectionVector.x) * Time.fixedDeltaTime),
-                            -maxSpeed * 2.5f,
-                            maxSpeed * 2.5f)
+                            (walkAcceleration * 1.5f * (targetDirectionVector.x) * Time.fixedDeltaTime),
+                            -maxSpeed * 2.2f,
+                            maxSpeed * 2.2f)
                         , rb.velocity.y)
                              :
                         new Vector2(
@@ -162,6 +163,8 @@ public class Skeleton : MonoBehaviour
                             -maxSpeed,
                             maxSpeed)
                         , rb.velocity.y);
+
+                    //Debug.Log(rb.velocity.x);
                 }
                 else
                 {
@@ -191,6 +194,8 @@ public class Skeleton : MonoBehaviour
     public void OnHit(float damage, Vector2 knockback)
     {
         rb.velocity = new Vector2(knockback.x, rb.velocity.y + knockback.y);
+        //Spawn efx
+        hitEfx.PlayEFX();
     }
     public void OnCliffDetected()
     {

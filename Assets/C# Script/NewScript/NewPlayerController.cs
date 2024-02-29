@@ -17,6 +17,8 @@ public class NewPlayerController : MonoBehaviour
     private float jumpForce = 16f;
     [SerializeField]
     private float fallSpeedBuff = 1.5f;
+    [SerializeField]
+    public Vector2 attackForce = Vector2.zero;
     private bool fallBuff = false;
     private Vector2 playerInput;
     [SerializeField]
@@ -160,6 +162,7 @@ public class NewPlayerController : MonoBehaviour
         }
     }
 
+
     private bool _holdingBow = false;
 
     public bool HoldingBow
@@ -284,7 +287,16 @@ public class NewPlayerController : MonoBehaviour
         if (context.started && touchingDirections.isGrounded)
         {
             animator.SetTrigger(AnimationStrings.attackTrigger);
+            //Debug.Log("Add force to player");
+            //Debug.Log(isFacingRight ? attackForce.x : -attackForce.x);
+            //rb.velocity = new Vector2((isFacingRight ? attackForce.x : -attackForce.x), rb.velocity.y);
+            //Debug.Log(rb.velocity.x);
         }
+    }
+
+    public void AddAttackForce()
+    {
+        rb.AddForce(isFacingRight ? attackForce : -attackForce, ForceMode2D.Force);
     }
 
     public void OnHit(float damage, Vector2 knockback)

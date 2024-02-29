@@ -22,6 +22,11 @@ public class FadeObject : MonoBehaviour
             objectRenderer.color = newColor;
             currentFadeTime += Time.deltaTime;
         }
+
+        if (objectRenderer.color.a <= 0.01f)
+        {
+            Destroy(gameObject);
+        }
     }
 }
 

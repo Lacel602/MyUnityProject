@@ -18,6 +18,8 @@ public class Knight : MonoBehaviour
     private DetectionZone attackZone;
     [SerializeField]
     private DetectionZone cliffDetection;
+    [SerializeField]
+    private HitEFX hitEfx;
     private Animator animator;
 
     Rigidbody2D rb;
@@ -145,6 +147,8 @@ public class Knight : MonoBehaviour
     public void OnHit(float damage, Vector2 knockback)
     {
         rb.velocity = new Vector2(knockback.x, rb.velocity.y + knockback.y);
+        //Spawn efx
+        hitEfx.PlayEFX();
     }
 
     public void OnCliffDetected()
